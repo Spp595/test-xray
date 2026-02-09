@@ -1,33 +1,47 @@
 {
-  "log": {
-    "loglevel": "warning"
-  },
+  "log": { "loglevel": "warning" },
   "inbounds": [
     {
+      "port": 443,
       "listen": "0.0.0.0",
-      "port": 8080,
       "protocol": "vless",
       "settings": {
         "clients": [
-          {
-            "id": "30045d7f-3487-467a-a2e6-c5ddada2f8b8"
-          }
+          { "id": "30045d7f-3487-467a-a2e6-c5ddada2f8b8", "flow": "xtls-rprx-vision" }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "reality",
+        "realitySettings": {
+          "show": false,
+          "dest": "yandex.net:443",
+          "serverNames": ["yandex.net"],
+          "privateKey": "sFcEuvWBEtvK4aqKwQCw4iqhX4Fi8J_4F7G23v6-vE4",
+          "shortIds": ["a1b2c3d4"]
+        }
+      }
+    },
+    {
+      "port": 8080,
+      "listen": "0.0.0.0",
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          { "id": "823935e4-6606-457c-b9f7-fd2e595b4504" }
         ],
         "decryption": "none"
       },
       "streamSettings": {
         "network": "ws",
         "wsSettings": {
-          "path": "/vless",
-          "headers": {}
+          "path": "/health"
         }
       }
     }
   ],
   "outbounds": [
-    {
-      "protocol": "freedom",
-      "tag": "direct"
-    }
+    { "protocol": "freedom" }
   ]
 }
