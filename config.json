@@ -1,64 +1,40 @@
 {
-  "log": {
-    "loglevel": "warning"
-  },
-  "inbounds": [
-    {
-      "listen": "0.0.0.0",
-      "port": 443,
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "30045d7f-3487-467a-a2e6-c5ddada2f8b8",
-            "flow": "xtls-rprx-vision"
-          }
-        ],
-        "decryption": "none",
-        "fallbacks": [
-          {
-            "dest": "yandex.net:443",
-            "xver": 1
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "tcp",
-        "security": "reality",
-        "realitySettings": {
-          "show": false,
-          "dest": "yandex.net:443",
-          "xver": 0,
-          "serverNames": [
-            "yandex.net",
-            "www.yandex.net",
-            "ya.ru",
-            "yandex.ru"
-          ],
-          "privateKey": "aKX9Zmx9WhMoCLAtn1XfLgX20CB0xOuVST8R8wE-vlI",
-          "minClientVer": "",
-          "maxClientVer": "",
-          "maxTimeDiff": 0,
-          "shortIds": [
-            "a1b2c3d4",
-            "beef1122"
-          ]
-        }
-      },
-      "sniffing": {
-        "enabled": true,
-        "destOverride": ["http", "tls"]
-      }
-    }
-  ],
-  "outbounds": [
-    {
-      "protocol": "freedom",
-      "tag": "direct"
+    "log": {
+        "loglevel": "warning"
     },
-    {
-      "protocol": "blackhole",
-      "tag": "block"
-    }
-  ]
+    "inbounds": [
+        {
+            "port": 443,
+            "protocol": "vless",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "4d6e0338-f67a-4187-bca3-902e232466bc",
+                        "email": "John",
+                        "flow": "xtls-rprx-vision"
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "raw",
+                "security": "reality",
+                "realitySettings": {
+                    "dest": "yandex.net:443",
+                    "serverNames": [
+                        "yandex.net"
+                    ],
+                    "privateKey": "-KCT66QKym9Hm2y0g1RkcTCdolg-K3MNBA-oOs3pfUw",
+                    "shortIds": [
+                        ""
+                    ]
+                }
+            }
+        }
+    ],
+    "outbounds": [
+        {
+            "protocol": "freedom"
+        }
+    ]
 }
