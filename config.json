@@ -1,8 +1,6 @@
 {
   "log": {
-    "loglevel": "warning",
-    "error": "/var/log/xray/error.log",
-    "access": "/var/log/xray/access.log"
+    "loglevel": "warning"
   },
   "inbounds": [
     {
@@ -12,9 +10,8 @@
       "settings": {
         "clients": [
           {
-            "id": "30045d7f-3487-467a-a2e6-c5ddada2f8b8",          // ← ЗАМЕНИ ЭТО на свой UUID
-            "flow": "xtls-rprx-vision",
-            "email": "user1"
+            "id": "30045d7f-3487-467a-a2e6-c5ddada2f8b8",
+            "flow": "xtls-rprx-vision"
           }
         ],
         "decryption": "none",
@@ -36,25 +33,21 @@
             "yandex.net",
             "www.yandex.net",
             "ya.ru",
-            "yandex.ru",
-            "yastatic.net"
+            "yandex.ru"
           ],
-          "privateKey": "aKX9Zmx9WhMoCLAtn1XfLgX20CB0xOuVST8R8wE-vlI",   // ← ЗАМЕНИ ЭТО на свой приватный ключ
+          "privateKey": "aKX9Zmx9WhMoCLAtn1XfLgX20CB0xOuVST8R8wE-vlI",
           "minClientVer": "",
           "maxClientVer": "",
           "maxTimeDiff": 0,
           "shortIds": [
             "a1b2c3d4",
-            "beefcafe",
-            "11223344",
-            ""
+            "beef1122"
           ]
         }
       },
       "sniffing": {
         "enabled": true,
-        "destOverride": ["http", "tls", "quic"],
-        "routeOnly": false
+        "destOverride": ["http", "tls"]
       }
     }
   ],
@@ -67,15 +60,5 @@
       "protocol": "blackhole",
       "tag": "block"
     }
-  ],
-  "routing": {
-    "domainStrategy": "IPIfNonMatch",
-    "rules": [
-      {
-        "type": "field",
-        "outboundTag": "block",
-        "domain": ["geosite:category-ads-all"]
-      }
-    ]
-  }
+  ]
 }
