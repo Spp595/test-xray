@@ -1,0 +1,81 @@
+{
+  "log": {
+    "loglevel": "warning",
+    "error": "/var/log/xray/error.log",
+    "access": "/var/log/xray/access.log"
+  },
+  "inbounds": [
+    {
+      "listen": "0.0.0.0",
+      "port": 443,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "30045d7f-3487-467a-a2e6-c5ddada2f8b8",          // ← ЗАМЕНИ ЭТО на свой UUID
+            "flow": "xtls-rprx-vision",
+            "email": "user1"
+          }
+        ],
+        "decryption": "none",
+        "fallbacks": [
+          {
+            "dest": "yandex.net:443",
+            "xver": 1
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "reality",
+        "realitySettings": {
+          "show": false,
+          "dest": "yandex.net:443",
+          "xver": 0,
+          "serverNames": [
+            "yandex.net",
+            "www.yandex.net",
+            "ya.ru",
+            "yandex.ru",
+            "yastatic.net"
+          ],
+          "privateKey": "aKX9Zmx9WhMoCLAtn1XfLgX20CB0xOuVST8R8wE-vlI",   // ← ЗАМЕНИ ЭТО на свой приватный ключ
+          "minClientVer": "",
+          "maxClientVer": "",
+          "maxTimeDiff": 0,
+          "shortIds": [
+            "a1b2c3d4",
+            "beefcafe",
+            "11223344",
+            ""
+          ]
+        }
+      },
+      "sniffing": {
+        "enabled": true,
+        "destOverride": ["http", "tls", "quic"],
+        "routeOnly": false
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "tag": "direct"
+    },
+    {
+      "protocol": "blackhole",
+      "tag": "block"
+    }
+  ],
+  "routing": {
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {
+        "type": "field",
+        "outboundTag": "block",
+        "domain": ["geosite:category-ads-all"]
+      }
+    ]
+  }
+}
