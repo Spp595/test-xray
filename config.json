@@ -1,40 +1,33 @@
 {
-    "log": {
-        "loglevel": "warning"
-    },
-    "inbounds": [
-        {
-            "port": 443,
-            "protocol": "vless",
-            "settings": {
-                "clients": [
-                    {
-                        "id": "4d6e0338-f67a-4187-bca3-902e232466bc",
-                        "email": "John",
-                        "flow": "xtls-rprx-vision"
-                    }
-                ],
-                "decryption": "none"
-            },
-            "streamSettings": {
-                "network": "raw",
-                "security": "reality",
-                "realitySettings": {
-                    "dest": "yandex.net:443",
-                    "serverNames": [
-                        "yandex.net"
-                    ],
-                    "privateKey": "-KCT66QKym9Hm2y0g1RkcTCdolg-K3MNBA-oOs3pfUw",
-                    "shortIds": [
-                        ""
-                    ]
-                }
-            }
+  "log": {
+    "loglevel": "warning"
+  },
+  "inbounds": [
+    {
+      "listen": "0.0.0.0",
+      "port": 8080,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "30045d7f-3487-467a-a2e6-c5ddada2f8b8"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/vless",
+          "headers": {}
         }
-    ],
-    "outbounds": [
-        {
-            "protocol": "freedom"
-        }
-    ]
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "tag": "direct"
+    }
+  ]
 }
