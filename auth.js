@@ -40,7 +40,7 @@
             // Проверка UID через API
             function checkAuth() {
                 var luid = getLuid();
-                fetch("http://localhost:8000/api/auth/" + luid)
+                fetch("https://api.sp595.ru/api/auth/" + luid)
                     .then(function(res){ return res.json(); })
                     .then(function(data){
                         var statusDiv = document.getElementById("lampa-auth-status");
