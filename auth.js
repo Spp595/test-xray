@@ -1,69 +1,83 @@
-var plugin_auth = function() {
-    var self = this;
+// Минимальный плагин Lampa
+export default class LampaUIDPlugin {
+    constructor() {
+        this.api_url = "https://api.sp595.ru/api/auth";
+    }
 
-    self.api_url = "https://api.sp595.ru/api/auth";
+    init() {
+        // Показываем Lampa UID
+        this.showLuid();
 
-    // Получаем Lampa UID (предположим, Lampa хранит его в window.LampaUID)
-    self.getLuid = function() {
+        // Проверяем авторизацию
+        this.checkAuth();
+    }
+
+    getLuid() {
+        // Lampa сама генерирует LUID и хранит его в window.LampaUID
         if(window.LampaUID) {
             return window.LampaUID;
         } else {
             console.warn("Lampa UID не найден!");
             return "unknown_luid";
         }
-    };
+    }
 
-    // Проверка наличия LUID в базе
-    self.checkAuth = function(callback) {
-        var luid = self.getLuid();
-        fetch(`${self.api_url}/${luid}`)
-            .then(res => res.json())
-            .then(data => {
-                callback(data.message.includes("Успешно"), data.message);
-            })
-            .catch(err => callback(false, err));
-    };
-
-    // Отображение LUID снизу экрана
-    self.showLuid = function() {
-        var existing = document.getElementById("lampa-uid-display");
+    showLuid() {
+        let existing = document.getElementById("lampa-uid-display");
         if(existing) return;
 
-        var div = document.createElement("div");
+        let div = document.createElement("div");
         div.id = "lampa-uid-display";
-        div.innerText = "Lampa UID: " + self.getLuid();
+        div.innerText = "Lampa UID: " + this.getLuid();
         div.style = `
-            position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%);
-            background: #000000aa; color: #fff; padding: 5px 10px; border-radius: 5px;
-            font-size: 16px; z-index: 9999; font-family: Arial, sans-serif;
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #000000aa;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            z-index: 9999;
+            font-family: Arial, sans-serif;
         `;
         document.body.appendChild(div);
-    };
+    }
 
-    // Инициализация плагина
-    self.init = function() {
-        self.showLuid();
+    async checkAuth() {
+        let luid = this.getLuid();
+        try {
+            let res = await fetch(`${this.api_url}/${luid}`);
+            let data = await res.json();
+            let statusDiv = document.getElementById("lampa-auth-status");
 
-        self.checkAuth(function(success, msg){
-            console.log("Проверка LUID:", success, msg);
-
-            // Статус авторизации
-            var statusDiv = document.getElementById("lampa-auth-status");
             if(!statusDiv) {
                 statusDiv = document.createElement("div");
                 statusDiv.id = "lampa-auth-status";
                 statusDiv.style = `
-                    position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
-                    background: #000000aa; color: #fff; padding: 5px 10px; border-radius: 5px;
-                    font-size: 16px; z-index: 9999; font-family: Arial, sans-serif;
+                    position: fixed;
+                    bottom: 40px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: #000000aa;
+                    color: #fff;
+                    padding: 5px 10px;
+                    border-radius: 5px;
+                    font-size: 16px;
+                    z-index: 9999;
+                    font-family: Arial, sans-serif;
                 `;
                 document.body.appendChild(statusDiv);
             }
-            statusDiv.innerText = success ? "Авторизация: Есть" : "Авторизация: Нет";
-        });
-    };
-};
 
-// Инициализация
-window.pluginAuthLampa = new plugin_auth();
-window.pluginAuthLampa.init();
+            statusDiv.innerText = data.message.includes("Успешно") ? "Авторизация: Есть" : "Авторизация: Нет";
+        } catch(e) {
+            console.error("Ошибка проверки LUID:", e);
+        }
+    }
+}
+
+// Автоинициализация
+window.LampaUIDPlugin = new LampaUIDPlugin();
+window.LampaUIDPlugin.init();
