@@ -1,7 +1,7 @@
 var plugin_auth = function() {
     var self = this;
 
-    self.api_url = "http://localhost:8000/api/auth";
+    self.api_url = "https://api.sp595.ru/api/auth";
 
     // Получаем Lampa UID (предположим, Lampa хранит его в window.LampaUID)
     self.getLuid = function() {
